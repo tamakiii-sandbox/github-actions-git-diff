@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - run: |
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
+
+      - run: |
+          mkdir -p test
+          echo 'Read me' > test/README.md
+          git -C test init
+          git -C test add README.md
+          git -C test commit -m 'hello'
+          git -C test log -p
+
+      - run: echo 'Do not read me' > test/README.md
+
+      - run: git -C test diff --exit-code || true
+
+      - if: failure()
+        run: echo 'failed'
