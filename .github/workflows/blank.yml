@@ -29,7 +29,7 @@ jobs:
 
       - run: echo 'Do not read me' > test/README.md
 
-      - run: git -C test diff --exit-code || true
+      - run: test "$(git -C test diff --exit-code > /dev/null && echo $?)" = "0" && echo 'ok'
+      - run: test "$(git -C test diff --exit-code > /dev/null && echo $?)" = "1" && echo 'ng'
 
-      - if: failure()
-        run: echo 'failed'
+      - run: echo 'blah blah blah...'
