@@ -25,7 +25,7 @@ jobs:
 
       - run: echo 'Do not read me' > test/README.md
 
-      - run: |
-        git -C test diff --exit-code
-        echo \$?
-        echo 'OK'
+      - run: git -C test diff --exit-code
+
+      - if: failure()
+        run: echo 'failed'
