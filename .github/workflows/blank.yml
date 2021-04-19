@@ -15,5 +15,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - run: |
+          mkdir -p test
+          echo 'Read me' > test/README.md
+          git -C test init
+          git -C test add README.md
+          git -C test commit -m 'hello'
+          git -C test log -p
+
+      - run: echo 'Do not read me' > test/README.md
+
+      - run: |
+        git -C test diff --exit-code
+        echo $?
+        echo 'OK'
