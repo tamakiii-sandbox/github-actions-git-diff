@@ -27,7 +27,7 @@ jobs:
           git -C test commit -m 'hello'
           git -C test log -p
 
-      - run: echo 'Do not read me' > test/README.md
+      # - run: echo 'Do not read me' > test/README.md
 
       - run: test "$(git -C test diff --exit-code > /dev/null && echo $?)" = "0" && echo 'ok' || true
       - run: test "$(git -C test diff --exit-code > /dev/null || echo $?)" = "1" && echo 'ng' || true
